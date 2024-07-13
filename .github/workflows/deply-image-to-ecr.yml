@@ -4,6 +4,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  SpinupInfra:
+    name: Terraform plan validate and apply
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Format & Plan
+        run: |
+          cd aws-infra
+          terraform init --reconfigure
+          terraform fmt
+          terraform plan
+
   ECRDeployment:
     name: Build Docker Image and Push to ECR
     runs-on: ubuntu-latest
