@@ -57,7 +57,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.terraform_apply.outputs.ecr_repo_url }}
           ECR_REPOSITORY: ${{ steps.terraform_apply.outputs.ecr_repo_name }}
         run: |
-          cd terraform
+          cd aws-infra
           terraform init --reconfigure
           terraform apply -auto-approve
           echo $ECR_REGISTRY
