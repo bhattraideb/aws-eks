@@ -14,6 +14,9 @@ jobs:
       AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
@@ -23,6 +26,19 @@ jobs:
           terraform init --reconfigure
           terraform fmt
           terraform plan
+
+      - name: Terraform Apply
+        id: terraform_apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          ECR_REGISTRY: ${{ steps.terraform_apply.outputs.ecr_repo_url }}
+          ECR_REPOSITORY: ${{ steps.terraform_apply.outputs.ecr_repo_name }}
+        run: |
+          cd terraform
+          terraform init --reconfigure
+          terraform apply -auto-approve
+          echo $ECR_REGISTRY
+          echo $ECR_REPOSITORY
 
   ECRDeployment:
     name: Build Docker Image and Push to ECR
