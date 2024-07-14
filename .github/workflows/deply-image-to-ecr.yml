@@ -65,6 +65,7 @@ jobs:
 
   ECRDeployment:
     name: Build Docker Image and Push to ECR
+    needs: [SpinupInfra]
     runs-on: ubuntu-latest
     steps:
       - name: checkout
