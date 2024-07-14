@@ -82,16 +82,12 @@ jobs:
         id: login-aws-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Set outputs
-        id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-
       - name: Build and push the tagged docker image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-aws-ecr.outputs.registry }}
           ECR_REPOSITORY: 'kubernetes-flask-api-images'       #${{ steps.login-aws-ecr.outputs.ecr_repo_name }}
           IMAGE_TAG: latest
         run: |
+          echo ${{ steps.login-aws-ecr.outputs }}
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo ${{ steps.login-aws-ecr.outputs.repository }}
