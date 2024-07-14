@@ -89,7 +89,7 @@ jobs:
       - name: Build and push the tagged docker image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-aws-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ steps.login-aws-ecr.outputs.ecr_repo_name }}
+          ECR_REPOSITORY: 'kubernetes-flask-api-images'       #${{ steps.login-aws-ecr.outputs.ecr_repo_name }}
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
