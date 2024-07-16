@@ -2,6 +2,8 @@
 FROM python:3.10-alpine
 LABEL maintainer="BhattraiDeb"
 
+WORKDIR /app
+
 # set environment variables & Poetry
 ENV PYTHONUNBUFFERED=1 \
     PYTHONFAULTHANDLER=1 \
@@ -10,7 +12,8 @@ ENV PYTHONUNBUFFERED=1 \
     POETRY_CACHE_DIR=/opt/.cache \
     POETRY_VERSION=1.7.0 \
     POETRY_HOME=/opt/poetry \
-    POETRY_VENV=/opt/poetry-venv
+    POETRY_VENV=/opt/poetry-venv \
+    FLASK_RUN_HOST=0.0.0.0
 
 ## Install poetry separated from system interpreter
 RUN python3 -m venv $POETRY_VENV \
@@ -24,7 +27,7 @@ ENV PATH="${PATH}:${POETRY_VENV}/bin"
 # Set the working directory inside the container & Copy Application
 COPY ./backend-api /app
 #COPY ./scripts /scripts
-WORKDIR /app
+
 
 ## Copy Dependencies
 COPY ./backend-api/poetry.lock /backend-api/pyproject.toml ./
@@ -41,6 +44,9 @@ RUN poetry check
 # Expose the port on which the Flask app will run
 EXPOSE 5000
 ENV FLASK_APP=app/backend_api
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=5 \
+            CMD curl -f http://localhost:5000/health || exit 1
 
 #RUN chmod +x /scripts/*
 

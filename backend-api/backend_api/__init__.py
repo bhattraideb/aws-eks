@@ -2,9 +2,10 @@ __version__ = '0.1.0'
 
 import os
 
-from flask import Flask
+from flask import Flask, render_template
 
-from .views.hello_world import hello_world
+from.views.fetch_host import fetch_details
+from .views.hello_world import hello_world, health_check
 
 
 def create_app():
@@ -13,6 +14,15 @@ def create_app():
     @app.route('/')
     def home():
         return hello_world()
+
+    @app.route('/details')
+    def details():
+        host_name, ip_address = fetch_details()
+        return render_template('index.html', hostname=host_name, ipaddress=ip_address)
+
+    @app.route('/health')
+    def health():
+        return health_check()
 
     # @app.route('/fizzbuzz/<int:number>')
     # def fizzbuzz_check(number):
