@@ -28,19 +28,6 @@ variable "AWS_REGION" {
   default     = "us-east-1"
 }
 
-#
-# variable "web_security_group_name" {
-#   type        = string
-#   description = "Security group for EC2 to be launched"
-#   default = "WebAccess"
-# }
-#
-# variable "api_security_group_name" {
-#   type        = string
-#   description = "Security group for EC2 to be launched"
-#   default = "APIAccess"
-# }
-
 variable "flask_api_repository_name" {
   type        = string
   description = "Flask API repo name deployed from GitHub"
@@ -58,4 +45,24 @@ variable "docker_app_name" {
   description = "Name of Docker App"
   default     = "flask-api"
 }
+
+variable "eks_cluster_role_name" {
+  type        = string
+  description = "Role name for EKS"
+  default = "eks-cluster-role"
+}
+
+variable eks_cluster_name {
+  type        = string
+  description = "Cluster name"
+  default = "flask-api-cluster"
+}
+
+variable subnet_ids {
+  type        = list(string)
+  description = "Public subnet IDs of cluster"
+  default = ["ChangeMe", "ChangeMe"]
+}
+
+
 

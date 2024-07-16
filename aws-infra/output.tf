@@ -1,27 +1,23 @@
-output "flask_api_ecr_repo_url" {
-  value = module.flask_api_ecr_repo.ecr_repo_url
+output "vpc_public_subnet_ids" {
+  value = [module.custom_vpc.public_a_subnet_id, module.custom_vpc.public_b_subnet_id]
 }
 
-output "flask_api_ecr_repo_arn" {
-  value = module.flask_api_ecr_repo.ecr_repo_arn
+output "cluster_endpoint" {
+  value = module.aws_eks_cluster.endpoint
 }
 
-output "flask_api_ecr_repo_name" {
-  value = module.flask_api_ecr_repo.ecr_repo_name
+output "kubeconfig-certificate-authority-data" {
+  value = module.aws_eks_cluster.kubeconfig-certificate-authority-data
 }
 
-#output "ami_ecr_repo_url" {
-#  value = module.ami_ecr_repo.ecr_repo_url
-#}
-#
-#output "ami_ecr_repo_arn" {
-#  value = module.ami_ecr_repo.ecr_repo_arn
-#}
-#
-#output "ami_ecr_repo_name" {
-#  value = module.ami_ecr_repo.ecr_repo_name
-#}
+output "ecr_repo_url" {
+  value = module.aws_ecr_repo.ecr_repo_url
+}
 
-#output "packer_repo_bucket" {
-#  value = aws_s3_bucket.test_bucket.bucket
-#}
+output "ecr_repo_arn" {
+  value = module.aws_ecr_repo.ecr_repo_arn
+}
+
+output "ecr_repo_name" {
+  value = module.aws_ecr_repo.ecr_repo_name
+}
