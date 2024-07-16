@@ -88,6 +88,6 @@ jobs:
           ECR_REPOSITORY: 'kubernetes-flask-api-images'       #${{ steps.login-aws-ecr.outputs.ecr_repo_name }}
           IMAGE_TAG: latest
         run: |
-#          echo ${{ steps.login-aws-ecr.outputs.repository }}
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          
