@@ -2,7 +2,9 @@
 FROM python:3.10-alpine
 LABEL maintainer="BhattraiDeb"
 
+# Set the working directory inside the container & Copy Application
 WORKDIR /app
+COPY ./flask-api /app
 
 # set environment variables & Poetry
 ENV PYTHONUNBUFFERED=1 \
@@ -23,22 +25,13 @@ RUN python3 -m venv $POETRY_VENV \
 # Add `poetry` to PATH
 ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
-
-# Set the working directory inside the container & Copy Application
-COPY ./flask-api /app
-#COPY ./scripts /scripts
-
-
-## Copy Dependencies
-COPY ./flask-api/poetry.lock /flask-api/pyproject.toml ./
-
 USER root
 
 # Install the Python dependencies
-RUN apk add --update curl jq
-RUN pip install --upgrade pip
-RUN pip install flake8 pytest
-RUN poetry install --no-interaction --no-cache --without dev
+RUN apk add --update curl jq git && \
+    pip install --upgrade pip && \
+    pip install flake8 pytest && \
+    poetry install --no-interaction --no-cache --without dev
 
 # [OPTIONAL] Validate the project is properly configured
 RUN poetry check
@@ -50,8 +43,10 @@ ENV FLASK_APP=app/flask_api
 HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=5 \
             CMD curl -f http://localhost:5000/health || exit 1
 
+# Copy Dependencies and custom scripts
+#COPY ./scripts /scripts
+#COPY ./flask-api/poetry.lock /flask-api/pyproject.toml ./
 #RUN chmod +x /scripts/*
-
 # Specify the command to run the application
 #CMD ["entrypoint.sh"]
 CMD [ "poetry", "run", "python", "-m", "flask", "run", "--host", "0.0.0.0", "--port", "5000" ]
