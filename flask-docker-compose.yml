@@ -4,14 +4,14 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: FlaskDockerfile
     image: flask_api:1.0
-    container_name: backend_api
+    container_name: flask_api
     ports:
       - "8080:5000"
     restart: always
     volumes:
-      - ./backend-api:/app
+      - ./flask-api:/app
 
   redis:
     image: "redis:alpine"
