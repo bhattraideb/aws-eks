@@ -5,6 +5,7 @@
 .terraform
 **/my_keys/*
 public_ips.txt
+**/.prod_env
 .git
 .idea/*
 *.log
