@@ -34,6 +34,12 @@ variable "flask_api_repository_name" {
   default     = "kubernetes-flask-api-images"
 }
 
+variable "django_api_repository_name" {
+  type        = string
+  description = "Django API repo name deployed from GitHub"
+  default     = "kubernetes-django-api-images"
+}
+
 variable "ecs_application_port" {
   type        = string
   description = "Port the Flask APP runs on docker"

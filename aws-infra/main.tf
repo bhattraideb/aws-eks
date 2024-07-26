@@ -1,22 +1,24 @@
 module "custom_vpc" {
-  source = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_custom_vpc"
+  source = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_custom_vpc?ref=main"
+#   source = "git@gitlab.com:bhattraideb/aws-terraform-modules.git//modules/aws_custom_vpc?ref=main"
   environment = var.environment
 }
 
-module "aws_ecr_repo" {
-  source          = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_ecr"
+module "flask_repo" {
+  source          = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_ecr?ref=main"
+#   source = "git::ssh://git@gitlab.com:bhattraideb/aws-terraform-modules.git//data/aws_ecr?ref=main"
   repository_name = var.flask_api_repository_name
 }
 
-module "aws_eks_cluster" {
-  source = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_eks_cluster"
-  eks_cluster_role_name = var.eks_cluster_role_name
-  eks_cluster_name = var.eks_cluster_name
-  subnet_ids = [module.custom_vpc.public_a_subnet_id, module.custom_vpc.public_b_subnet_id]
+module "django_repo" {
+  source          = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_ecr?ref=main"
+#    source = "git@gitlab.com:bhattraideb/aws-terraform-modules.git//data/aws_ecr?ref=main"
+  repository_name = var.django_api_repository_name
 }
 
 module "aws_database_instance" {
-  source = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_database"
+  source = "git::https://gitlab.com/bhattraideb/aws-terraform-modules.git//modules/aws_database?ref=main"
+#    source = "git@gitlab.com:bhattraideb/aws-terraform-modules.git//modules/aws_database?ref=main"
   db_identifier_name          = var.db_identifier_name
   database_name               = var.database_name
   storage_type                = var.storage_type
