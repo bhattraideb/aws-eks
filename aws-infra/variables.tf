@@ -51,24 +51,24 @@ variable "docker_app_name" {
   description = "Name of Docker App"
   default     = "flask-api"
 }
-
-variable "eks_cluster_role_name" {
-  type        = string
-  description = "Role name for EKS"
-  default = "eks-cluster-role"
-}
-
-variable eks_cluster_name {
-  type        = string
-  description = "Cluster name"
-  default = "flask-api-cluster"
-}
-
-variable subnet_ids {
-  type        = list(string)
-  description = "Public subnet IDs of cluster"
-  default = ["ChangeMe", "ChangeMe"]
-}
+#
+# variable "eks_cluster_role_name" {
+#   type        = string
+#   description = "Role name for EKS"
+#   default     = "eks-cluster-role"
+# }
+#
+# variable "eks_cluster_name" {
+#   type        = string
+#   description = "Cluster name"
+#   default     = "flask-api-cluster"
+# }
+#
+# variable "subnet_ids" {
+#   type        = list(string)
+#   description = "Public subnet IDs of cluster"
+#   default     = ["ChangeMe", "ChangeMe"]
+# }
 ######################################################################
 ############################## DATABASE  #############################
 ######################################################################
