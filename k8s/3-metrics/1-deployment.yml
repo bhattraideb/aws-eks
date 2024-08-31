@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: bhatraideb/flask-api:latest
+          image: 645662440846.dkr.ecr.us-east-1.amazonaws.com/kubernetes-flask-api:latest
           ports:
             - name: http
               containerPort: 5000
