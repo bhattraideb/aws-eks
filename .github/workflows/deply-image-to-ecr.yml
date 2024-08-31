@@ -45,7 +45,7 @@ jobs:
 #          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 #          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
         run: |
-          cd aws-infra
+          cd terraform
           terraform init --reconfigure
           terraform fmt
           terraform plan
@@ -57,7 +57,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.terraform_apply.outputs.ecr_repo_url }}
           ECR_REPOSITORY: ${{ steps.terraform_apply.outputs.ecr_repo_name }}
         run: |
-          cd aws-infra
+          cd terraform
           terraform init --reconfigure
           terraform apply -auto-approve
           echo $ECR_REGISTRY
