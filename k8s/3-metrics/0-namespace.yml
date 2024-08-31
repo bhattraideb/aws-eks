@@ -2,4 +2,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: horizontal-pod-autoscaling
+  name: 3-metrics

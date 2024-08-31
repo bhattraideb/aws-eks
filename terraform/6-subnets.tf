@@ -3,10 +3,11 @@ resource "aws_subnet" "private_zone1" {
   cidr_block        = "10.0.0.0/19"
   availability_zone = var.zone1
 
+  #   https://docs.aws.amazon.com/eks/latest/userguide/network-load-balancing.html#itemizedlist
   tags = {
     "Name"                                                     = "${local.project}-private-${var.zone1}"
     "kubernetes.io/role/internal-elb"                          = "1"
-    "kubernetes.io/cluster/${var.environment}-${var.eks_name}" = "owned"
+    "kubernetes.io/cluster/${var.environment}-${var.eks_name}" = "owned" # OR "shared"
   }
 }
 
@@ -18,7 +19,7 @@ resource "aws_subnet" "private_zone2" {
   tags = {
     "Name"                                                     = "${local.project}-private-${var.zone2}"
     "kubernetes.io/role/internal-elb"                          = "1"
-    "kubernetes.io/cluster/${var.environment}-${var.eks_name}" = "owned"
+    "kubernetes.io/cluster/${var.environment}-${var.eks_name}" = "owned" # OR "shared"
   }
 }
 

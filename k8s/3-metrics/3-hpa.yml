@@ -3,7 +3,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: myapp
-  namespace: horizontal-pod-autoscaling
+  namespace: 3-metrics
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

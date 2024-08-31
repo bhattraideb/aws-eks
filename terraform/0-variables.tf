@@ -40,6 +40,7 @@ variable "eks_name" {
   default     = "demo"
 }
 
+# https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html#available-versions
 variable "eks_version" {
   type        = string
   description = "Latest version of EKS"

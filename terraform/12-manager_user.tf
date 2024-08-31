@@ -84,5 +84,5 @@ resource "aws_iam_user_policy_attachment" "eks_manager_policy_attachment" {
 resource "aws_eks_access_entry" "manager_access" {
   cluster_name      = aws_eks_cluster.eks_cluster.name
   principal_arn     = aws_iam_role.eks_admin_role.arn
-  kubernetes_groups = ["my-admin"]
+  kubernetes_groups = ["admin-group"]
 }

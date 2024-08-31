@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: myapp
-  namespace: horizontal-pod-autoscaling
+  namespace: 3-metrics
 spec:
   selector:
     matchLabels:
@@ -15,10 +15,10 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: bhatraideb/flask-api:latest      # aputra/myapp-195:v2      # Need to change this Image
+          image: bhatraideb/flask-api:latest
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 5000
           resources:
             requests:
               memory: 256Mi
