@@ -65,3 +65,9 @@ variable "region" {
   description = "Region"
   default     = "us-east-1"
 }
+
+variable "flask_api_repository_name" {
+  type        = string
+  description = "Flask API repo name deployed from GitHub"
+  default     = "kubernetes-flask-api"
+}
