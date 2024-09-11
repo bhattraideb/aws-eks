@@ -8,7 +8,7 @@ from.views.fetch_host import fetch_details
 from .views.hello_world import hello_world, health_check
 from .views.fizzbuzz import check_fizzbuzz
 from .views.prime_number import check_prime, sum_of_primes
-from .views.fibonacci import check_fibonacci, generate_fibonacci
+from .views.fibonacci import generate_fibonacci, check_if_number_is_fibonacci
 
 
 def create_app():
@@ -44,7 +44,7 @@ def create_app():
 
     @app.route('/fibonacci/check/<int:number>')
     def fibonacci_check(number) -> str:
-        if check_fibonacci(number):
+        if check_if_number_is_fibonacci(number):
             return 'Yes'
         return 'No'
 

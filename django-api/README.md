@@ -1,5 +1,6 @@
 [//]: # (https://python-poetry.org/docs/basic-usage/)
 [//]: # (poetry run django-admin startproject user_management .)
 [//]: # (poetry run python manage.py runserver)
-[//]: # (poetry run python -c "import secrets;print&#40;secrets.token_urlsafe&#40;32&#41;&#41;")
+[//]: # (poetry run python -c "import secrets;print(secrets.token_urlsafe(32))")
 [//]: # (docker run -p 8000:8000 app1)
+[//]: # (kubectl create secret generic aws-prod-env --from-env-file=django/.prod_env)

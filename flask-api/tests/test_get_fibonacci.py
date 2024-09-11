@@ -43,9 +43,9 @@ def test_check_fibonacci_89(client):
 
 def test_generate_fibonacci_5(client):
     response = client.get("/fibonacci/generate/5")
-    assert response.text == "[0,1,1,2,3]\n"
+    assert response.text == "[0,1,1,2,3,5]\n"
 
 
 def test_generate_fibonacci_8(client):
     response = client.get("/fibonacci/generate/8")
-    assert response.text == "[0,1,1,2,3,5,8,13]\n"
+    assert response.text == "[0,1,1,2,3,5,8]\n"

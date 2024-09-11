@@ -30,7 +30,7 @@ crash.log
 # example.tfvars
 .tfvars
 **terraform.tfvars
-terraform/variables.tf
+terraform/0-variables.tf
 variables.tfvar
 **terraform.lock.hcl
 
