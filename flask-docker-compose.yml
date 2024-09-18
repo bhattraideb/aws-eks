@@ -11,7 +11,7 @@ services:
       - "8080:5000"
     restart: always
     volumes:
-      - ./flask-api:/app
+      - ./flask-api-data:/app
 
   redis:
     image: "redis:alpine"
