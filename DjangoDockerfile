@@ -26,7 +26,7 @@ RUN python3 -m venv $POETRY_VENV \
 ENV PATH="${PATH}:${POETRY_VENV}/bin"
 
 # Install the Python dependencies
-RUN apk add --update curl jq git && \
+RUN apk add --update curl jq git  postgresql-client postgresql-dev && \
     pip install --upgrade pip && \
     pip install flake8 pytest && \
     poetry install --no-interaction --no-cache --without dev
@@ -39,9 +39,12 @@ EXPOSE 8000
 ENV DJANGO_APP=app/django_api
 
 HEALTHCHECK --interval=30s --timeout=30s --start-period=30s --retries=5 \
-            CMD curl -f http://0.0.0.0:8000/health || exit 1
+            CMD curl -f http://0.0.0.0:8000/admin || exit 1
+
+COPY ./scripts /scripts
+RUN chmod -R +x /scripts
 
 # Specify the command to run the application
-#CMD ["entrypoint.sh"]
+CMD ["scripts/django_run.sh"]
 #CMD [ "poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000"]
 

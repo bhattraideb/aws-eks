@@ -7,43 +7,51 @@ services:
       dockerfile: DjangoDockerfile
     image: django-api:latest
     container_name: django_api
+    command: >
+      sh -c "poetry run python manage.py migrate &&
+             poetry run python manage.py runserver 0.0.0.0:8000"
+
 #    environment:
-#      - DB_HOST=postgres_db
-#      - DB_NAME=test_api
-#      - DB_USER=admin
+#      - DEBUG=1
+#      - DB_HOST=psql_db
+#      - DB_NAME=django_test_api
+#      - DB_USER=postgres
 #      - DB_PASS=admin
 #      - DB_PORT=5432
+
+################## Replace env vars with .env file and replace 'environment:' with the file
     env_file:
       - django-api/.env
-    expose:
-      - 8000
     ports:
       - "8000:8000"
-    command: sh -c "chmod +x /app/scripts/migrate.sh && chmod +x /app/scripts/entrypoint.sh &&
-             sh /app/scripts/migrate.sh && /app/scripts/entrypoint.sh"
 #    volumes:
 #      - staticfiles:/app/staticfiles/
-#    volumes:
-#      - ./django-api:/app
-    depends_on:
-      - postgres_db
-
-  postgres_db:
-    image: postgres:12-alpine
-    restart: always
-    command: -p 5430
-    expose:
-      - 5430
-    ports:
-      - "5430:5430"
-#    environment:
-#      - POSTGRES_DB=test_api
-#      - POSTGRES_USER=admin
-#      - POSTGRES_PASSWORD=admin
-    env_file:
-      - django-api/.env
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - django_api_data:/vol/django_api
+      - ./django-api:/app
+    depends_on:
+      psql_db:
+         condition: service_healthy
+      redis_db:
+        condition: service_started
+
+  psql_db:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_DB=django_test_api
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+################## Replace env vars with .env file and replace 'environment:' with the file
+#    env_file:
+#      - django-api/.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/14/main/data/
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "django_test_api", "-U", "postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis_db:
     image: redis:alpine
@@ -57,6 +65,7 @@ services:
     entrypoint: redis-server --appendonly yes --port 6388
 
 volumes:
+  django_api_data:
   postgres_data:
   redis_data:
 #  staticfiles:

@@ -4,3 +4,9 @@
 [//]: # (poetry run python -c "import secrets;print(secrets.token_urlsafe(32))")
 [//]: # (docker run -p 8000:8000 app1)
 [//]: # (kubectl create secret generic aws-prod-env --from-env-file=django/.prod_env)
+[//]: # (docker-compose -f django-docker-compose.yml up --build --remove-orphans)  --force-recreate will recreate the container, but the
+[//]: # (image will not be rebuilt if it already exists. If you want to rebuild the image, you should pass --build to your up)
+[//]: # (command.)
+[//]: # (Check processes using 5432 port: sudo lsof -i :5432)
+[//]: # (psql -U postgres)
+[//]: # (sudo systemctl restart postgresql)
